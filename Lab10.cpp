@@ -44,9 +44,7 @@ void main()//main function
 				OutputMenu();//show menu of available commands
 		}
 		if (ErrorCode!=0)//checking correctness of performed operations
-		{
 			ErrorHandler(ErrorCode);//show error message
-		}
 	}
 }
 
@@ -58,7 +56,7 @@ void OutputMenu()//show menu of available commands
 	cout<<"Press 2 to calculate arithmetic mean of array elements\n";
 	cout<<"Press 3 to delete element preceding the last maximum element\n";
 	cout<<"Press 4 to output array\n";
-	cout<<"Press 5 to get info about the program\n\n";
+	cout<<"Press 5 to get info about the program";
 }
 
 int InputArray(int *ArraySize, int **Array, bool *FirstLaunch)//array input
@@ -69,13 +67,9 @@ int InputArray(int *ArraySize, int **Array, bool *FirstLaunch)//array input
 	ErrorCode=InputNumber(&EnteredNumber);//input quantity of elements in array
 	*ArraySize=EnteredNumber;
 	if (*ArraySize<=0)//quantity is zero or below
-	{
 		return 3;
-	}
 	if (ErrorCode!=0)//checking correctness of performed operation
-	{
 		return ErrorCode;
-	}
 	if (!*FirstLaunch)//checking existance of array
 		delete [] *Array;//delete old array
 	else
@@ -87,14 +81,10 @@ int InputArray(int *ArraySize, int **Array, bool *FirstLaunch)//array input
 		 ErrorCode=InputNumber(&EnteredNumber);
 		(*Array)[Counter]=EnteredNumber;
 		if (ErrorCode!=0)//checking correctness of performed operations
-		{
 			return ErrorCode;
-		}
 	}
-	cout<<"\nDone!\n\n";
+	cout<<"\nDone!";
 	return 0;
-
-
 }
 
 int InputNumber(int *EnteredNumber) //number input
@@ -120,34 +110,25 @@ int InputNumber(int *EnteredNumber) //number input
 				NegativeValue=true;//flag what number is now negative
 				SymbolsQuantity++;//increase quantity of symbols
 			}
-			else
-				if ((EnteredSymbol==-40)&&(SymbolsQuantity!=0))//deleting symbol
+			if ((EnteredSymbol==-40)&&(SymbolsQuantity>0))//deleting symbol
+			{
+				cout<<(char)8;//delete symbol
+				cout<<" ";
+				cout<<(char)8;
+				*EnteredNumber/=10;//decrease entered number
+				if ((NegativeValue==true)&&(SymbolsQuantity==1))//delete minus sign
 				{
-					cout<<(char)8;//delete symbol
-					cout<<" ";
-					cout<<(char)8;
-					*EnteredNumber/=10;//decrease entered number
-					if ((NegativeValue==true)&&(SymbolsQuantity==1))//delete minus sign
-					{
-						NegativeValue=false;
-					}
-					SymbolsQuantity--;//decrease quantity of elements
+					NegativeValue=false;
 				}
-				else
-					if ((EnteredSymbol==-16) || (EnteredSymbol==-35))//end of number input
-					{
-						cout<<(char)32;//show space instead of space and enter
-						if (NegativeValue==true)//checking number negativity
-							{
-								*EnteredNumber*=-1;
-							}
-						return 0;
-					}
-					else
-					{
-                        return 4;
-                    }
-
+				SymbolsQuantity--;//decrease quantity of elements
+			}
+			if ((EnteredSymbol==-16) || (EnteredSymbol==-35))//end of number input
+			{
+				cout<<(char)32;//show space instead of space and enter
+				if (NegativeValue==true)//checking number negativity
+					*EnteredNumber*=-1;
+				return 0;
+			}
 		}
 	}
 }
@@ -159,10 +140,8 @@ int OutputArray(int ArraySize, int *Array)//array output
 	{
 		cout<<"Array of "<<ArraySize<<" elements\n";//show info about array
 		for (Counter = 0; Counter < ArraySize; Counter++)//output array elements
-		{
 			cout<<Array[Counter]<<" ";
-		}
-		cout<<"\nDone!\n\n";
+		cout<<"\nDone!";
 	}
 	else
 		return 1;//array has not been inputed
@@ -176,11 +155,9 @@ int ArithmeticMeanCalculation(int ArraySize, int *Array, float *ArithmeticMean)/
 	if (ArraySize>0)//checking what array has been inputed
 	{
 		for (Counter = 0; Counter < ArraySize; Counter++)//sum all elements
-		{
 			ElementsSum+=Array[Counter];
-		}
 		*ArithmeticMean=(float)ElementsSum/ArraySize;//calculate average
-		cout<<"Arithmetic mean of array elements is: "<<*ArithmeticMean;
+		cout<<"Arithmetic mean of array elements is: "<<*ArithmeticMean<<"";
 	}
 	else
 		return 1;//array has not been inputed
@@ -197,28 +174,22 @@ int ElementDeletion(int *ArraySize, int **Array)//deletion of element preceding 
 		MaximumElementIndex=0;//setting first element as maximum
 		MaximumElement=(*Array)[0];
 		for (Counter = 1; Counter < *ArraySize; Counter++)//checking all elements
-		{
 			if ((*Array)[Counter]>=MaximumElement)//replacing maximum elemnt
 			{
 				MaximumElement=(*Array)[Counter];
 				MaximumElementIndex=Counter;
 			}
-		}
 		if (MaximumElementIndex>0)//checking position of first element
 		{
 			cout<<"Last maximum element is number "<<(MaximumElementIndex+1)<<", with value "<<MaximumElement<<"\n";//show what will be done
-			cout<<"Preceding element with value "<<(*Array)[MaximumElementIndex-1]<<" has been removed.\n";
+			cout<<"Preceding element with value "<<(*Array)[MaximumElementIndex-1]<<" has been removed.";
 			(*ArraySize)--;//shrink array size
 			MaximumElementIndex--;//get index of element to remove
 			ArrayCut=new int[*ArraySize];//new array of less size
 			for (Counter = 0; Counter < MaximumElementIndex; Counter++)//move elements before removed element to the new array
-			{
 				(ArrayCut)[Counter]=(*Array)[Counter];
-			}
-			for (Counter = MaximumElementIndex; Counter < *ArraySize; Counter++)//move elements after removed element to the new array with ыршае
-			{
-			  (ArrayCut)[Counter]=(*Array)[Counter+1];
-			}
+			for (Counter = MaximumElementIndex; Counter < *ArraySize; Counter++)//move elements after removed element to the new array with shift
+			  	(ArrayCut)[Counter]=(*Array)[Counter+1];
 			delete [] *Array;//delete old array
 			*Array=ArrayCut;//give old array pointer to new array
 		}
@@ -237,7 +208,7 @@ void AboutProgramme()//show info about the programme
 	cout<<"Variant 4\n\n";
 	cout<<"Version 1.0 build 20160313200000\n\n";
 	cout<<"Development and testing: Yaskovich Dmitry (ISBO-05-15)\n\n";
-	cout<<"Dimini Inc, 2016\n\n";
+	cout<<"Dimini Inc, 2016";
 }
 
 void ErrorHandler(int ErrorCode)//show error message
