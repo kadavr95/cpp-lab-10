@@ -2,13 +2,13 @@
 #include <iostream.h>
 
 void OutputMenu();//functions prototypes
-int InputArray(int *ArraySize, int **Array);
-int OutputArray(int ArraySize, int *Array);
-int ArithmeticMeanCalculation(int ArraySize, int *Array, float *ArithmeticMean);
-int ElementDeletion(int *ArraySize, int **Array);
+int InputArray(int *, int **,bool *);
+int OutputArray(int, int *);
+int ArithmeticMeanCalculation(int , int *, float *);
+int ElementDeletion(int *, int **);
 void AboutProgramme();
-void ErrorHandler(int ErrorCode);
-int InputNumber(int *EnteredNumber);
+void ErrorHandler(int);
+int InputNumber(int *);
 
 void main()//main function
 {
@@ -16,6 +16,7 @@ void main()//main function
 	int *Array;
 	int ArraySize=0, ErrorCode;
 	float ArithmeticMean;
+	bool FirstLaunch=true;
 	OutputMenu();//show menu of available commands
 	while(1)//endless repeat
 	{
@@ -25,7 +26,7 @@ void main()//main function
 		switch (OperationCode)//command choice
 		{
 			case 49:
-				ErrorCode=InputArray(&ArraySize, &Array);//array input
+				ErrorCode=InputArray(&ArraySize, &Array, &FirstLaunch);//array input
 				break;
 			case 50:
 				ErrorCode=ArithmeticMeanCalculation(ArraySize, Array, &ArithmeticMean);//calculation of arithmetic mean
@@ -60,7 +61,7 @@ void OutputMenu()//show menu of available commands
 	cout<<"Press 5 to get info about the program\n\n";
 }
 
-int InputArray(int *ArraySize, int **Array)//array input
+int InputArray(int *ArraySize, int **Array, bool *FirstLaunch)//array input
 {
 	int Counter, EnteredNumber, ErrorCode=0;
 	cout<<"ARRAY INPUT\n";
@@ -75,7 +76,10 @@ int InputArray(int *ArraySize, int **Array)//array input
 	{
 		return ErrorCode;
 	}
-	//delete [] *Array;
+	if (!*FirstLaunch)//checking existance of array
+		delete [] *Array;//delete old array
+	else
+		*FirstLaunch=false;
 	*Array=new int[*ArraySize];//create array
 	cout<<"\nEnter array elements\n";
 	for (Counter = 0; Counter < *ArraySize; Counter++)//input of array elements
