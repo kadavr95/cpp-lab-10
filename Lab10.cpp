@@ -89,18 +89,19 @@ int InputArray(int *ArraySize, int **Array)
 
 }
 
-int InputNumber()
+int InputNumber(int *EnteredNumber)
 {
- 	int EnteredSymbol, EnteredNumber=0;
+	int EnteredSymbol;
 	bool ExitCondition=false, NegativeValue=true;
+	*EnteredNumber=0;
 	while (ExitCondition==false)
 	{
 
 		EnteredSymbol=getch()-48;
 		if ((EnteredSymbol>=0)&&(EnteredSymbol<=9))
 		{
-				EnteredNumber*=10;
-				EnteredNumber+=EnteredSymbol;
+				*EnteredNumber*=10;
+				*EnteredNumber+=EnteredSymbol;
 				cout<<EnteredSymbol;
 
 				NegativeValue=false;
@@ -110,11 +111,12 @@ int InputNumber()
 			if ((EnteredSymbol==-3) && (NegativeValue))
 			{
 				cout<<(char)45;
+				NegativeValue=false;
 			}
 			if ((EnteredSymbol==-16) || (EnteredSymbol==-35))
 			{
 				cout<<(char)32;
-				return EnteredNumber;
+				return 0;
 			}
 		}
 	}
