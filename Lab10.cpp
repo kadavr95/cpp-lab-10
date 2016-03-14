@@ -67,6 +67,10 @@ int InputArray(int *ArraySize, int **Array)
 	cout<<"Enter quantity of elements in array\n";
 	ErrorCode=InputNumber(&EnteredNumber);
 	*ArraySize=EnteredNumber;
+	if (*ArraySize<=0)
+	{
+		return 3;
+	}
 	if (ErrorCode!=0)
 	{
 		return ErrorCode;
@@ -91,8 +95,8 @@ int InputArray(int *ArraySize, int **Array)
 
 int InputNumber(int *EnteredNumber)
 {
-	int EnteredSymbol;
-	bool ExitCondition=false, NegativeValue=true;
+	int EnteredSymbol, SymbolsQuantity=0;
+	bool ExitCondition=false, NegativeValue=false;
 	*EnteredNumber=0;
 	while (ExitCondition==false)
 	{
@@ -103,19 +107,34 @@ int InputNumber(int *EnteredNumber)
 				*EnteredNumber*=10;
 				*EnteredNumber+=EnteredSymbol;
 				cout<<EnteredSymbol;
-
-				NegativeValue=false;
+				SymbolsQuantity++;
 		}
 		else
 		{
-			if ((EnteredSymbol==-3) && (NegativeValue))
+			if ((EnteredSymbol==-3) && (SymbolsQuantity==0))
 			{
 				cout<<(char)45;
-				NegativeValue=false;
+				NegativeValue=true;
+				SymbolsQuantity++;
+			}
+			if ((EnteredSymbol==-40)&&(SymbolsQuantity!=0))			{
+				cout<<(char)8;
+				cout<<" ";
+				cout<<(char)8;
+				*EnteredNumber/=10;
+				if ((NegativeValue==true)&&(SymbolsQuantity==1))
+				{
+					NegativeValue=false;
+				}
+				SymbolsQuantity--;
 			}
 			if ((EnteredSymbol==-16) || (EnteredSymbol==-35))
 			{
 				cout<<(char)32;
+				if (NegativeValue==true)
+				{
+					*EnteredNumber*=-1;
+				}
 				return 0;
 			}
 		}
@@ -220,6 +239,9 @@ void ErrorHandler(int ErrorCode)
 				break;
 			case 2:
 				cout<<"The first element of array is the only one maximum. Preceding element can not be deleted.";
+				break;
+			case 3:
+				cout<<"Quantity of elements in array can not be zero or less";
 				break;
 			default:
 				cout<<"Unknown error";
