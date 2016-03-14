@@ -116,27 +116,34 @@ int InputNumber(int *EnteredNumber) //number input
 				NegativeValue=true;//flag what number is now negative
 				SymbolsQuantity++;//increase quantity of symbols
 			}
-			if ((EnteredSymbol==-40)&&(SymbolsQuantity!=0))//deleting symbol
-			{
-				cout<<(char)8;//delete symbol
-				cout<<" ";
-				cout<<(char)8;
-				*EnteredNumber/=10;//decrease entered number
-				if ((NegativeValue==true)&&(SymbolsQuantity==1))//delete minus sign
+			else
+				if ((EnteredSymbol==-40)&&(SymbolsQuantity!=0))//deleting symbol
 				{
-					NegativeValue=false;
+					cout<<(char)8;//delete symbol
+					cout<<" ";
+					cout<<(char)8;
+					*EnteredNumber/=10;//decrease entered number
+					if ((NegativeValue==true)&&(SymbolsQuantity==1))//delete minus sign
+					{
+						NegativeValue=false;
+					}
+					SymbolsQuantity--;//decrease quantity of elements
 				}
-				SymbolsQuantity--;//decrease quantity of elements
-			}
-			if ((EnteredSymbol==-16) || (EnteredSymbol==-35))//end of number input
-			{
-				cout<<(char)32;//show space instead of space and enter
-				if (NegativeValue==true)//checking number negativity
-				{
-					*EnteredNumber*=-1;
-				}
-				return 0;
-			}
+				else
+					if ((EnteredSymbol==-16) || (EnteredSymbol==-35))//end of number input
+					{
+						cout<<(char)32;//show space instead of space and enter
+						if (NegativeValue==true)//checking number negativity
+							{
+								*EnteredNumber*=-1;
+							}
+						return 0;
+					}
+					else
+					{
+                        return 4;
+                    }
+
 		}
 	}
 }
