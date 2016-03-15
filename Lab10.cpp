@@ -122,7 +122,7 @@ int InputNumber(int *EnteredNumber) //number input
 				}
 				SymbolsQuantity--;//decrease quantity of elements
 			}
-			if ((EnteredSymbol==-16) || (EnteredSymbol==-35))//end of number input
+			if (((EnteredSymbol==-16) || (EnteredSymbol==-35))&& ((SymbolsQuantity>1)||((SymbolsQuantity==1) && (!NegativeValue))))//end of number input
 			{
 				cout<<(char)32;//show space instead of space and enter
 				if (NegativeValue==true)//checking number negativity
@@ -206,7 +206,7 @@ void AboutProgramme()//show info about the programme
 	cout<<"ABOUT PROGRAMME\n\n";
 	cout<<"Lab 10: Modular programming\n";
 	cout<<"Variant 4\n\n";
-	cout<<"Version 1.0 build 20160314230000\n\n";
+	cout<<"Version 1.1 build 20160315191800\n\n";
 	cout<<"Development and testing: Yaskovich Dmitry (ISBO-05-15)\n\n";
 	cout<<"Dimini Inc, 2016";
 }
